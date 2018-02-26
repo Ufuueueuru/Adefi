@@ -18,8 +18,8 @@ var highScore = [0,0,0,0,0];
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(15);
-  apple.x = floor(random(0,windowWidth)/10)*10-10;
-  apple.y = floor(random(0,windowHeight)/10)*10-10;
+  apple.x = floor(random(0,windowWidth)/10)*10-50;
+  apple.y = floor(random(0,windowHeight)/10)*10-50;
 }
 
 function draw() {
@@ -71,21 +71,21 @@ function draw() {
             snake.xV.push(0);
             snake.yV.push(0);
           }
-          apple.x = floor(random(0,windowWidth)/10)*10-10;
-          apple.y = floor(random(0,windowHeight)/10)*10-10;
+          apple.x = floor(random(0,windowWidth)/10)*10-50;
+          apple.y = floor(random(0,windowHeight)/10)*10-50;
         }
       }
-      if(snake.x[i] > windowWidth-10){
+      if(snake.x[i] > windowWidth-50){
         snake.x[i] = 0;
       }
       if(snake.x[i] < 0){
-        snake.x[i] = floor(windowWidth/10)*10-10;
+        snake.x[i] = floor(windowWidth/10)*10-50;
       }
-      if(snake.y[i] > windowHeight-10){
+      if(snake.y[i] > windowHeight-50){
         snake.y[i] = 0;
       }
       if(snake.y[i] < 0){
-        snake.y[i] = floor(windowHeight/10)*10-10;
+        snake.y[i] = floor(windowHeight/10)*10-50;
       }
     }
     if(keys[39] && lastKey !== 37){
