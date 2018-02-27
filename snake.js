@@ -50,6 +50,40 @@ function draw() {
       snake.xV.push(0);
       snake.yV.push(0);
     }*/
+		if(keys[39] && lastKey !== 37){
+      lastKey = 39;
+    }else{
+      if(keys[38] && lastKey !== 40){
+        lastKey = 38;
+      }else{
+        if(keys[37] && lastKey !== 39){
+          lastKey = 37;
+        }else{
+          if(keys[40] && lastKey !== 38){
+            lastKey = 40;
+          }
+        }
+      }
+    }
+    if(keys[82]){
+      gameOver = true;
+    }
+    if(lastKey === 39){//right
+      snake.xV[0] = 10;
+      snake.yV[0] = 0;
+    }
+    if(lastKey === 37){//left
+      snake.xV[0] = -10;
+      snake.yV[0] = 0;
+    }
+    if(lastKey === 38){//up
+      snake.xV[0] = 0;
+      snake.yV[0] = -10;
+    }
+    if(lastKey === 40){//down
+      snake.xV[0] = 0;
+      snake.yV[0] = 10;
+    }
     noStroke();
     fill(255,0,0);
     rect(apple.x,apple.y,10,10);//apple
@@ -90,40 +124,6 @@ function draw() {
       if(snake.y[i] < 0){
         snake.y[i] = floor(490/10)*10;
       }
-    }
-    if(keys[39] && lastKey !== 37){
-      lastKey = 39;
-    }else{
-      if(keys[38] && lastKey !== 40){
-        lastKey = 38;
-      }else{
-        if(keys[37] && lastKey !== 39){
-          lastKey = 37;
-        }else{
-          if(keys[40] && lastKey !== 38){
-            lastKey = 40;
-          }
-        }
-      }
-    }
-    if(keys[82]){
-      gameOver = true;
-    }
-    if(lastKey === 39){//right
-      snake.xV[0] = 10;
-      snake.yV[0] = 0;
-    }
-    if(lastKey === 37){//left
-      snake.xV[0] = -10;
-      snake.yV[0] = 0;
-    }
-    if(lastKey === 38){//up
-      snake.xV[0] = 0;
-      snake.yV[0] = -10;
-    }
-    if(lastKey === 40){//down
-      snake.xV[0] = 0;
-      snake.yV[0] = 10;
     }
     fill(255,255,255);
     if(gameMode === "easy"){
