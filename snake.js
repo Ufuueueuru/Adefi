@@ -16,13 +16,15 @@ var highScore = [0,0,0,0,0];
 //var hack = 0;
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(500, 500);
   frameRate(15);
   apple.x = floor(random(0,windowWidth)/10)*10-50;
   apple.y = floor(random(0,windowHeight)/10)*10-50;
 }
 
 function draw() {
+  stroke(50);
+  rect(1, 1, 498, 498);
   if(gameMode === "easy" && frameRate() !== 10){
     frameRate(10);
   }
