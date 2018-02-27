@@ -16,7 +16,7 @@ var highScore = [0,0,0,0,0];
 //var hack = 0;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(600, 600);
   frameRate(15);
   apple.x = floor(random(0,windowWidth)/10)*10-50;
   apple.y = floor(random(0,windowHeight)/10)*10-50;
@@ -75,17 +75,17 @@ function draw() {
           apple.y = floor(random(0,windowHeight)/10)*10-50;
         }
       }
-      if(snake.x[i] > windowWidth-50){
+      if(snake.x[i] > windowWidth-10){
         snake.x[i] = 0;
       }
       if(snake.x[i] < 0){
-        snake.x[i] = floor(windowWidth/10)*10-50;
+        snake.x[i] = floor(windowWidth/10)*10-10;
       }
-      if(snake.y[i] > windowHeight-50){
+      if(snake.y[i] > windowHeight-10){
         snake.y[i] = 0;
       }
       if(snake.y[i] < 0){
-        snake.y[i] = floor(windowHeight/10)*10-50;
+        snake.y[i] = floor(windowHeight/10)*10-10;
       }
     }
     if(keys[39] && lastKey !== 37){
@@ -222,10 +222,6 @@ function draw() {
       };
     }
   }
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
 }
 
 function keyPressed(){
