@@ -123,7 +123,7 @@ function draw() {
 }
 
 function windowResized() {
-	resizeCanvas(windowWidth, windowHeight);
+	resizeCanvas(windowWidth-2, windowHeight-2);
 	wid = windowWidth / 2;
 	hit = windowHeight / 2;
 }
