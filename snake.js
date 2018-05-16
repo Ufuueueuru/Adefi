@@ -1,239 +1,123 @@
-var apple = {//apple object
-  x: 0,
-  y: 0
-};
-var snake = {//snake object
-  x: [100],
-  y: [100],
-  xV: [10],
-  yV: [0]
-};
-var lastKey = 0;
+var bub; //x,y,size,color,xvol,yvol
+var wid;
+var hit;
+var x = 0;
+var y = 0;
+var siz = 10;
+var lose = 0;
+var rand = 0;
+var pause = 0;
 var keys = [];
-var gameOver = false;
-var gameMode = "normal";
-var highScore = [0,0,0,0,0];
-//var hack = 0;
+var wait = 0;
+
+function keyPressed() {
+	keys[keyCode] = true;
+};
+
+function keyReleased() {
+	keys[keyCode] = false;
+};
 
 function setup() {
-  createCanvas(500, 500);
-  frameRate(15);
-  apple.x = floor(random(0,490)/10)*10;
-  apple.y = floor(random(0,490)/10)*10;
+	wid = windowWidth / 2;
+	hit = windowHeight / 2;
+	bub = [
+		[-10, random(0, windowHeight), random(1, 30), new p5Color(random(0, 255), random(0, 255), random(0, 255)), random(0.1, 2), random(-2, 2)]
+	];
+	createCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
-  if(gameMode === "easy" && frameRate() !== 10){
-    frameRate(10);
-  }
-  if(gameMode === "normal" && frameRate() !== 15){
-    frameRate(15);
-  }
-  if(gameMode === "hard" && frameRate() !== 20){
-    frameRate(20);
-  }
-  if(gameMode === "INSANE" && frameRate() !== 60){
-    frameRate(60);
-  }
-  if(gameMode === "demented"){
-    frameRate(floor(random(10,150)));
-  }
-  background(0, 0, 0);
-	stroke(50);
-	noFill();
-  rect(0, 0, 499, 499);
-  if(gameOver === false){
-    /*hack ++;
-    if(hack > 1000){
-      snake.x.push(snake.x[snake.x.length-1]);
-      snake.y.push(snake.y[snake.y.length-1]);
-      snake.xV.push(0);
-      snake.yV.push(0);
-    }*/
-		if(keys[39] && lastKey !== 37){
-      lastKey = 39;
-    }else{
-      if(keys[38] && lastKey !== 40){
-        lastKey = 38;
-      }else{
-        if(keys[37] && lastKey !== 39){
-          lastKey = 37;
-        }else{
-          if(keys[40] && lastKey !== 38){
-            lastKey = 40;
-          }
-        }
-      }
-    }
-    if(keys[82]){
-      gameOver = true;
-    }
-    if(lastKey === 39){//right
-      snake.xV[0] = 10;
-      snake.yV[0] = 0;
-    }
-    if(lastKey === 37){//left
-      snake.xV[0] = -10;
-      snake.yV[0] = 0;
-    }
-    if(lastKey === 38){//up
-      snake.xV[0] = 0;
-      snake.yV[0] = -10;
-    }
-    if(lastKey === 40){//down
-      snake.xV[0] = 0;
-      snake.yV[0] = 10;
-    }
-    noStroke();
-    fill(255,0,0);
-    rect(apple.x,apple.y,10,10);//apple
-    fill(0,255,0);
-    for(var i = snake.x.length-1;i >= 0;i --){
-      rect(snake.x[i] + 4*(i/(snake.x.length)),snake.y[i] + 4*(i/(snake.x.length)),10 - 8*(i/(snake.x.length)),10 - 8*(i/(snake.x.length)));
-      snake.x[i] += snake.xV[i];
-      snake.y[i] += snake.yV[i];
-      if(i > 0){
-        snake.xV[i] = snake.xV[i-1];
-        snake.yV[i] = snake.yV[i-1];
-      }else{
-        for(var u = 0;u < snake.x.length;u ++){
-          if(snake.x[i] === snake.x[u] && snake.y[i] === snake.y[u] && i !== u){
-            gameOver = true;//die
-          }
-        }
-        if(snake.x[i] === apple.x && snake.y[i] === apple.y){
-          for(var t = 0;t < 3;t ++){
-            snake.x.push(snake.x[snake.x.length-1]);
-            snake.y.push(snake.y[snake.y.length-1]);
-            snake.xV.push(0);
-            snake.yV.push(0);
-          }
-          apple.x = floor(random(0,490)/10)*10;
-          apple.y = floor(random(0,490)/10)*10;
-        }
-      }
-      if(snake.x[i] > 490){
-        snake.x[i] = 0;
-      }
-      if(snake.x[i] < 0){
-        snake.x[i] = floor(490/10)*10;
-      }
-      if(snake.y[i] > 490){
-        snake.y[i] = 0;
-      }
-      if(snake.y[i] < 0){
-        snake.y[i] = floor(490/10)*10;
-      }
-    }
-    fill(255,255,255);
-    if(gameMode === "easy"){
-      text("High score: "+highScore[0],250,100);
-      if(highScore[0] < snake.x.length){
-        highScore[0] = snake.x.length;
-      }
-    }
-    if(gameMode === "normal"){
-      text("High score: "+highScore[1],250,100);
-      if(highScore[1] < snake.x.length){
-        highScore[1] = snake.x.length;
-      }
-    }
-    if(gameMode === "hard"){
-      text("High score: "+highScore[2],250,100);
-      if(highScore[2] < snake.x.length){
-        highScore[2] = snake.x.length;
-      }
-    }
-    if(gameMode === "INSANE"){
-      fill(255,10,10);
-      text("High score: "+highScore[3],250,100);
-      if(highScore[3] < snake.x.length){
-        highScore[3] = snake.x.length;
-      }
-    }
-    if(gameMode === "demented"){
-      fill(255,10,10);
-      text("High score: "+highScore[4],250,100);
-      fill(255,50,140);
-      text("High score: "+highScore[4],253,103);
-      if(highScore[4] < snake.x.length){
-        highScore[4] = snake.x.length;
-      }
-    }
-    textSize(20);
-    fill(255,255,255);
-    textAlign(CENTER);
-    text("Score: "+snake.x.length,250,130);
-  }
-  if(gameOver === true){
-    textAlign(CENTER);
-    fill(255,255,255);
-    textSize(20);
-    text("Game Mode: "+gameMode+"\n1-5 to change modes",250,50);
-    if(keys[49]){
-      gameMode = "easy";
-    }
-    if(keys[50]){
-      gameMode = "normal";
-    }
-    if(keys[51]){
-      gameMode = "hard";
-    }
-    if(keys[52]){
-      gameMode = "INSANE";
-    }
-    if(keys[53]){
-      gameMode = "demented";
-    }
-    if(gameMode === "easy"){
-      text("High score: "+highScore[0],250,100);
-    }
-    if(gameMode === "normal"){
-      text("High score: "+highScore[1],250,100);
-    }
-    if(gameMode === "hard"){
-      text("High score: "+highScore[2],250,100);
-    }
-    if(gameMode === "INSANE"){
-      fill(255,10,10);
-      text("High score: "+highScore[3],250,100);
-    }
-    if(gameMode === "demented"){
-      fill(255,10,10);
-      text("High score: "+highScore[4],250,100);
-      fill(255,50,140);
-      text("High score: "+highScore[4],253,103);
-    }
-    fill(255,255,255);
-    text("Score: "+snake.x.length,250,130);
-    textSize(50);
-    text("Game\nOver",250,250-80);
-    textSize(30);
-    text("Press space\nto try again",250,250+100);
-    if(keys[32]){
-      gameOver = false;
-      lastKey = 0;
-      apple = {//apple object
-        x: floor(random(0,490)/10)*10,
-        y: floor(random(0,490)/10)*10
-      };
-      snake = {//snake object
-        x: [100],
-        y: [100],
-        xV: [10],
-        yV: [0]
-      };
-    }
-  }
+	background(0, 0, 0);
+	if(lose === 0) {
+		if(pause === 0) {
+			textAlign(CENTER, CENTER);
+			y = pmouseY;
+			x = pmouseX;
+			fill(255, 255, 255);
+			noStroke();
+			ellipse(x, y, siz, siz);
+			for(var i = bub.length - 1; i >= 0; i--) {
+				fill(bub[i][3].red, bub[i][3].green, bub[i][3].blue);
+				ellipse(bub[i][0], bub[i][1], bub[i][2], bub[i][2]);
+				bub[i][0] += bub[i][4];
+				bub[i][1] += bub[i][5];
+				rand = round(random(1, 4));
+				if(random(0, 70) > 65 && bub.length < (windowWidth + windowHeight) / 48) {
+					if(rand === 1) {
+						bub.push([-siz * 3 / 2, random(0, windowHeight), random(log(siz) / 5, siz * 3), new p5Color(random(0, 255), random(0, 255), random(0, 255)), random(0.1, 2), random(-2, 2)]);
+					}
+					if(rand === 2) {
+						bub.push([random(0, windowWidth), -siz * 3 / 2, random(log(siz) / 5, siz * 3), new p5Color(random(0, 255), random(0, 255), random(0, 255)), random(-2, 2), random(0.1, 2)]);
+					}
+					if(rand === 3) {
+						bub.push([windowWidth + siz * 3 / 2, random(0, windowHeight), random(log(siz) / 5, siz * 3), new p5Color(random(0, 255), random(0, 255), random(0, 255)), random(-0.1, -2), random(-2, 2)]);
+					}
+					if(rand === 4) {
+						bub.push([random(0, windowWidth), windowHeight + siz * 3 / 2, random(log(siz) / 5, siz * 3), new p5Color(random(0, 255), random(0, 255), random(0, 255)), random(-2, 2), random(-0.1, -2)]);
+					}
+				}
+				if(dist(x, y, bub[i][0], bub[i][1]) <= siz / 2 + bub[i][2] / 2) {
+					if(siz < bub[i][2]) {
+						lose = 1;
+					}
+					if(siz >= bub[i][2]) {
+						siz += bub[i][2] / 10;
+						bub.splice(i, 1);
+					}
+				}
+				if(bub[i][0] < -1 - siz * 3 / 2 || bub[i][0] > windowWidth + 1 + siz * 3 / 2 || bub[i][1] < -1 - siz * 3 / 2 || bub[i][1] > windowHeight + 1 + siz * 3 / 2) {
+					bub.splice(i, 1);
+				}
+			}
+			if(keys[32] && wait === 0) {
+				pause = 1;
+				wait = 1;
+			}
+			if(keys[32] === false) {
+				wait = 0;
+			}
+		} else {
+			for(var i = bub.length-1; i >= 0; i--) {
+				fill(bub[i][3].red, bub[i][3].green, bub[i][3].blue);
+				ellipse(bub[i][0], bub[i][1], bub[i][2], bub[i][2]);
+			}
+			fill(255);
+			ellipse(x, y, siz, siz);
+			textSize(50);
+			fill(255, 255, 255);
+			text("pause", wid, hit);
+			if(keys[32] && wait === 0) {
+				pause = 0;
+				wait = 1;
+			}
+			if(keys[32] === false) {
+				wait = 0;
+			}
+		}
+	} else {
+		fill(255, 255, 255);
+		textSize(50);
+		text("You Lose!", wid, hit);
+		textSize(20);
+		text(floor(siz) + " Points\n(click to try again)", wid, hit + 50);
+		if(mouseIsPressed) {
+			bub = [
+				[-10, random(0, windowHeight), random(1, 30), new p5Color(random(0, 255), random(0, 255), random(0, 255)), random(0.1, 2), random(-2, 2)]
+			];
+			x = mouseX;
+			y = mouseY;
+			siz = 10;
+			lose = 0;
+			rand = 0;
+			pause = 0;
+			keys = [];
+		}
+	}
 }
 
-function keyPressed(){
-  keys[keyCode] = true;
-}
-
-function keyReleased(){
-  keys[keyCode] = false;
-  /*if(hack < 1000){
-    hack = 0;
-  }*/
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+	wid = windowWidth / 2;
+	hit = windowHeight / 2;
 }
