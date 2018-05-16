@@ -10,6 +10,12 @@ var pause = 0;
 var keys = [];
 var wait = 0;
 
+function p5Color(r, g, b) {
+	this.red = r;
+	this.green = g;
+	this.blue = b;
+}
+
 function keyPressed() {
 	keys[keyCode] = true;
 };
