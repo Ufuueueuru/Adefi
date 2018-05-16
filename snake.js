@@ -30,7 +30,8 @@ function setup() {
 	bub = [
 		[-10, random(0, windowHeight), random(1, 30), new p5Color(random(0, 255), random(0, 255), random(0, 255)), random(0.1, 2), random(-2, 2)]
 	];
-	createCanvas(windowWidth, windowHeight);
+	canvas = createCanvas(windowWidth, windowHeight);
+	canvas.id("canvas");
 }
 
 function draw() {
@@ -123,7 +124,7 @@ function draw() {
 }
 
 function windowResized() {
-	resizeCanvas(windowWidth-2, windowHeight-2);
+	resizeCanvas(windowWidth, windowHeight);
 	wid = windowWidth / 2;
 	hit = windowHeight / 2;
 }
